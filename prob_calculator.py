@@ -1,5 +1,6 @@
 import copy
 import random
+
 # Consider using the modules imported above.
 
 class Hat:
@@ -26,7 +27,36 @@ class Hat:
 
 
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
-    pass
+    expected_outcomes = 0
+    total_outcomes = num_experiments
 
-h =  Hat(yellow = 1, blue = 2, striped = 2, red = 3)
+    for i in range(0, num_experiments):
+        if num_balls_drawn > len(hat.contents):
+            num_balls_drawn = len(hat.contents)
+        balls = hat.draw(num_balls_drawn)
+        hat.contents = copy.copy(hat.contents_copy)
+
+        balls_dict = {}
+        for ball in balls:
+            if ball in balls_dict.keys():
+                balls_dict[ball] += 1
+            else:
+                balls_dict[ball] = 1
+    
+        okays = 0
+        for key in expected_balls.keys():
+            try:
+                if expected_balls[key] <= balls_dict[key]:
+                    okays += 1
+                else:
+                    x = 1/0
+                
+            except:
+                break
+        
+        if okays == len(expected_balls.keys()):
+            expected_outcomes += 1
+
+    return expected_outcomes / total_outcomes
+
 
